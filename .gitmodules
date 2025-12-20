@@ -1,0 +1,3 @@
+[submodule "engine/vn-engine"]
+	path = engine/vn-engine
+	url = https://github.com/mishoshup/vn-engine.git
