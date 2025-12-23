@@ -1,36 +1,38 @@
-#include <VNEngine/VNEngine.hpp>
+#include "Cereka/Cereka.hpp"
+#include "Cereka/exceptions.hpp"
+#include <iostream>
+#include <vector>
 
-int main(int, const char **) {
-  VNEngine engine;
-  if (!engine.Init("My Visual Novel", 1920, 1080, true))
-    return 1;
+using namespace cereka;
 
-  engine.LoadScript("assets/scripts/prologue.lua");
+int main(int argc,
+         char **argv)
+{
+    CerekaEngine cereka;
 
-  bool running = true;
-  Uint64 last = SDL_GetPerformanceCounter();
-
-  while (running) {
-    Uint64 now = SDL_GetPerformanceCounter();
-    float dt = (now - last) / float(SDL_GetPerformanceFrequency());
-    last = now;
-
-    VNEvent event;
-    while (engine.PollEvent(event)) {
-      if (event.type == VNEvent::Quit) {
-        running = false;
-        break;
-      }
-      engine.HandleEvent(event);
+    // 1. Initialize the game window
+    if (!cereka.InitGame("My VN Game", 1280, 720, true)) {
+        throw engine::error("Failed to initialize VNEngine\n");
+        return 1;
     }
-    if (!running)
-      break;
 
-    engine.Update(dt);
-    engine.Draw();
-    engine.Present();
-  }
+    // 2. Compile your script
+    std::vector<scenario::Instruction> script = scenario::CompileVNScript(
+        "assets/scripts/test.crka");
+    cereka.LoadCompiledScript(script);
 
-  engine.ShutDown();
-  return 0;
+    while (!cereka.IsGameFinished()) {  // bukan while(running)
+        CerekaEvent e;
+        while (cereka.PollEvent(e)) {
+            cereka.HandleEvent(e);
+        }
+        cereka.Update(1.0f / 60.0f);
+        cereka.TickScript();
+        cereka.Draw();
+        cereka.Present();
+    }
+    // 4. Shutdown cereka and cleanup
+    cereka.ShutDown();
+
+    return 0;
 }

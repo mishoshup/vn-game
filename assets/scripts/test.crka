@@ -1,0 +1,22 @@
+label start_menu
+menu start
+    bg classroom.jpg
+    button "New Game" goto story_begin
+    button "Continue" goto story_middle
+    button "Exit" exit
+
+label story_begin
+bg classroom.jpg
+char Alice Alice_normal.png
+say Alice "Welcome to the game!"
+narrate "Your adventure begins here."
+say Alice "Click or press any key to continue..."
+end
+
+label story_middle
+bg classroom.jpg
+char Alice Alice_normal.png
+say Alice "STORY MIDDLEE!!!!!"
+narrate "Your adventure begins here."
+say Alice "Click or press any key to continue..."
+end

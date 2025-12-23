@@ -7,7 +7,7 @@ target_include_directories(VisualNovel
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Link the vendor library (propagates SDL3 + SDL_image)
-target_link_libraries(VisualNovel PRIVATE VNEngine)  
+target_link_libraries(VisualNovel PRIVATE Cereka)  
 target_include_directories(VisualNovel PRIVATE vn-engine/src)
 target_include_directories(VisualNovel PRIVATE vn-engine/include)
 target_include_directories(VisualNovel
