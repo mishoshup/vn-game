@@ -1,22 +1,44 @@
 label start_menu
 menu start
     bg classroom.jpg
-    button "New Game" goto story_begin
-    button "Continue" goto story_middle
+    button "New Game" goto chapter_one
     button "Exit" exit
 
-label story_begin
+label chapter_one
 bg classroom.jpg
 char Alice Alice_normal.png
-say Alice "Welcome to the game!"
-narrate "Your adventure begins here."
-say Alice "Click or press any key to continue..."
-end
+say Alice "Hey! Did you bring the notes today?"
 
-label story_middle
+menu choice_notes
+    bg classroom.jpg
+    button "Yes, I have them." goto had_notes
+    button "Sorry, I forgot..." goto no_notes
+
+label had_notes
+set notes given
+say Alice "Oh thank goodness, you're a lifesaver!"
+hide char Alice
+narrate "Alice takes the notes and heads to her seat."
+jump chapter_two
+
+label no_notes
+set notes forgotten
+say Alice "Are you serious?! We have a test next period!"
+hide char Alice
+narrate "Alice sighs and opens her own notebook to copy."
+jump chapter_two
+
+label chapter_two
 bg classroom.jpg
 char Alice Alice_normal.png
-say Alice "STORY MIDDLEE!!!!!"
-narrate "Your adventure begins here."
-say Alice "Click or press any key to continue..."
+
+if notes == given
+    say Alice "By the way, thanks again for the notes. I aced the test!"
+endif
+
+if notes == forgotten
+    say Alice "Next time, set an alarm or something. I covered for you this time."
+endif
+
+narrate "The bell rings. Another day at school."
 end
