@@ -1,4 +1,4 @@
 [submodule "engine/cereka"]
 	path = engine/cereka
-	url = git@github.com:mishoshup/cereka.git
+	url = git@github.com:mishoshup/Cereka.git
 	branch = main
